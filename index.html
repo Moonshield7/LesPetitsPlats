@@ -3,43 +3,81 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- Bootstrap 5.2.3 -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+	<!-- Googlefont -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+	<!-- Ajout de fontawesome-->
+	<script src="https://kit.fontawesome.com/6121bb2f79.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="style.css">
+	<title>Les Petits Plats</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+	<header>
+		<svg width="52" height="47" viewBox="0 0 52 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path fill-rule="evenodd" clip-rule="evenodd" d="M39.5083 25.3424V35.1415H12.4024V25.3424C7.99768 25.3424 4.60945 21.9635 4.60945 17.5708C4.60945 13.1781 7.99768 9.79908 12.4024 9.79908C15.4518 9.79908 18.1624 11.4886 19.5177 14.1918L22.9059 12.5023C21.8895 10.8128 20.873 9.12328 19.1789 8.10958C20.5342 5.74429 22.9059 4.05479 25.9553 4.05479C30.36 4.05479 33.7483 7.43378 33.7483 11.8265C33.7483 13.1781 33.4095 14.5297 32.7318 15.8813L36.12 17.9087C37.1365 16.2192 37.8142 14.1918 37.8142 11.8265C37.8142 11.1507 37.8142 10.8128 37.8142 10.137C38.4918 9.79908 39.1695 9.79908 39.8471 9.79908C44.2518 9.79908 47.64 13.1781 47.64 17.5708C47.64 21.9635 43.913 25.3424 39.5083 25.3424ZM39.5083 42.9132H12.4024V39.1963H39.5083V42.9132ZM39.5083 6.08219C38.4918 6.08219 37.4753 6.42009 36.12 6.42009C34.0871 2.70319 30.36 0 25.9553 0C21.5506 0 17.4847 2.36529 15.7906 6.42009C14.7742 6.08219 13.7577 6.08219 12.4024 6.08219C5.96474 6.08219 0.882385 11.1507 0.882385 17.5708C0.882385 22.6393 4.27062 27.0319 8.67533 28.3835V46.2922H43.5742V28.7214C47.9789 27.0319 51.3671 22.9772 51.3671 17.9087C51.3671 11.4886 45.9459 6.08219 39.5083 6.08219ZM22.2283 31.0867H18.5012V23.653H22.2283V31.0867ZM33.7483 31.0867H30.0212V23.653H33.7483V31.0867Z" fill="#D04F4F"/>
+		</svg>
+		<h1>Les petits plats</h1>
+	</header>
+	<main>
+		<div class="search">
+			<div class="search_recipe">
+				<input type="text" class="" placeholder="Rechercher une recette" aria-label="Rechercher une recette" aria-describedby="addon-wrapping">
+				<button id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></button>
+			</div>
+			<div class="search_filters-active">
+				<button class="filter_button">Coco</button>
+			</div>
+			<div class="search_filters_list">
+				<div class="search_filter_component" id="ingredients-component">
+					<input type="text" name="ingredients" id="ingredients" placeholder="Ingredients">
+					<i class="fa-solid fa-chevron-down"></i>
+					<div class="dropdown_list hidden"></div>
+				</div>
+				<div class="search_filter_component" id="appareils-component">
+					<input type="text" name="appareils" id="appareils" placeholder="Appareils">
+					<i class="fa-solid fa-chevron-down"></i>
+					<div class="dropdown_list hidden"></div>
+				</div>
+				<div class="search_filter_component" id="ustensils-component">
+					<input type="text" name="ustensils" id="ustensils" placeholder="Ustensils">
+					<i class="fa-solid fa-chevron-down"></i>
+					<div class="dropdown_list hidden"></div>
+				</div>
 
-	<nav class="navbar navbar-expand-lg bg-light">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">Navbar</a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Home</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Features</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Pricing</a>
-			  </li>
-			  <li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				  Dropdown link
-				</a>
-				<ul class="dropdown-menu">
-				  <li><a class="dropdown-item" href="#">Action</a></li>
-				  <li><a class="dropdown-item" href="#">Another action</a></li>
-				  <li><a class="dropdown-item" href="#">Something else here</a></li>
-				</ul>
-			  </li>
-			</ul>
-		  </div>
+			</div>
 		</div>
-	  </nav>
+		<div class="recipes">
+			<article>
+				<div class="img-placeholder"></div>
+				<div class="recipe-title">
+					<h2>Limonade de Coco</h2>
+					<h3><i class="fa-regular fa-clock"></i> 10min</h3>
+				</div>
+				<div class="recipe-content">
+					<div class="recipe-ingredients">
+						<ul>
+							<li><strong>Lait de coco :</strong> 400ml</li>
+							<li><strong>Jus de citron :</strong> 2</li>
+							<li><strong>Crème de coco :</strong> 4 cuillères</li>
+						</ul>
+					</div>
+					<p class="recipe-instructions">
+						Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée. Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.
+
+					</p>
+				</div>
+			</article>
+		</div>
+	</main>
+
+		
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

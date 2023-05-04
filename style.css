@@ -1,0 +1,249 @@
+/* Variables */
+
+:root {
+	--orange-dark: #D04F4F;
+	--orange-light:#ED6454;
+	--blue: #3282F7;
+	--green: #68D9A4;
+	--grey-dark:#C7BEBE;
+	--grey-light:#E7E7E7;
+	--font-Lato: 'Lato', sans-serif;
+	--font-DMsans: 'DM Sans', sans-serif;
+	--font-Roboto: 'Roboto', sans-serif;
+
+}
+
+/* Réinitialisation CSS */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Général */
+
+input {
+	font-family: var(--font-Lato);
+}
+
+h1 {
+	color: var(--orange-dark);
+	font-weight: 700;
+	font-size: 36px;
+	line-height: 47px;
+	letter-spacing: 2px;
+	font-family: var(--font-DMsans);
+}
+
+h2 {
+	font-family: var(--font-Lato);
+	font-weight: 600;
+	font-size: 18px;
+}
+
+h3 {
+	font-family: var(--font-Lato);
+	font-weight: 700;
+	font-size: 18px;
+}
+
+ul {
+	list-style: none;
+}
+
+header {
+	margin-top: 42px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* 
+	####################
+	# PARTIE RECHERCHE #
+	#################### */
+
+.search {
+	margin-top: 17px;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* Barre de recherche principale */
+
+.search_recipe {
+	width: 100%;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.search_recipe input {
+	width: 100%;
+	height: 70px;
+	border: none;
+	border-radius: 5px 0 0 5px;
+	background-color: var(--grey-light);
+	padding: 24px;
+	font-size: 18px;
+}
+
+.search_recipe button {
+	/* width:10%; */
+	height: 70px;
+	border: none;
+	border-radius: 0 5px 5px 0;
+	background-color: var(--grey-light);
+	font-size: 32px;
+	padding: 17px;
+}
+
+/* Filtres actifs (sélectionnés par l'utilisateur) */
+
+.search_filters-active {
+	margin-top: 25px;
+	width: 100%;
+	height: 37px;
+}
+
+.filter_button {
+	width: 107px;
+	height: 37px;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	font-size: 14px;
+	font-weight: 700;
+	background-color: var(--blue);
+	font-family: var(--font-Lato);
+}
+
+/* Recherche par filtres */
+
+.search_filters_list {
+	margin-top: 15px;
+	height: 70px;
+	width: 100%;
+	display: flex;
+}
+
+.search_filter_component {
+	width: 170px;
+	height: 70px;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 5px;
+	padding: 25px 15px;
+	margin-right: 15px;
+	font-size: 18px;
+	font-weight: 700;
+	color: white;
+	font-family: var(--font-Lato);
+}
+
+#ingredients-component {
+	background-color: var(--blue);
+}
+#appareils-component {
+	background-color: var(--green);
+}
+#ustensils-component {
+	background-color: var(--orange-light);
+}
+
+.search_filter_component i {
+	border: none;
+}
+.search_filter_component i:hover {
+	cursor: pointer;
+}
+
+.search_filter_component input {
+	border: none;
+	height: 100%;
+	width: 85%;
+	background: none;
+	color: white;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.search_filter_component input::placeholder{
+	color: white;
+}
+
+/* 
+	####################
+	# PARTIE RECETTES  #
+	#################### */
+
+.recipes {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-family: var(--font-Lato);
+}
+
+.recipes article {
+	margin-top: 25px;
+	padding: 0 20px;
+	width:380px;
+	height: 364px;
+	background-color: var(--grey-light);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.img-placeholder {
+	position: relative;
+	left: -20px;
+	width: 380px;
+	height: 178px;
+	background-color: var(--grey-dark);
+}
+.recipe-title {
+	display: flex;
+	width: 100%;
+	height: 60px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.recipe-content {
+	display: flex;
+}
+
+.recipe-ingredients {
+	width: 50%;
+	font-size: 12px;
+	line-height: 14.4px;
+}
+
+.recipe-instructions {
+	width: 170px;
+	height: 85px;
+	font-size: 12px;
+	font-family: var(--font-Roboto);
+	overflow: hidden;
+    white-space:normal;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 6;
+}
+
+
+/* Utiles */
+
+.hidden {
+	display: none;
+}
