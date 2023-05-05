@@ -45,6 +45,8 @@ h3 {
 	font-family: var(--font-Lato);
 	font-weight: 700;
 	font-size: 18px;
+	width: 39%;
+	text-align: right;
 }
 
 ul {
@@ -187,14 +189,18 @@ main {
 	#################### */
 
 .recipes {
+	margin-top: 25px;
+	margin-bottom: 50px;
+	width: 90%;
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	font-family: var(--font-Lato);
 }
 
 .recipes article {
-	margin-top: 25px;
+	margin-top: 50px;
 	padding: 0 20px;
 	width:380px;
 	height: 364px;
@@ -207,29 +213,31 @@ main {
 	position: relative;
 	left: -20px;
 	width: 380px;
-	height: 178px;
+	height: 45%;
 	background-color: var(--grey-dark);
 }
 .recipe-title {
 	display: flex;
 	width: 100%;
-	height: 60px;
+	height: 15%;
 	align-items: center;
 	justify-content: space-between;
 }
 
 .recipe-content {
 	display: flex;
+	justify-content: space-between;
+	height: 40%;
 }
 
 .recipe-ingredients {
-	width: 50%;
+	width: 165px;
 	font-size: 12px;
 	line-height: 14.4px;
 }
 
 .recipe-instructions {
-	width: 170px;
+	width: 165px;
 	height: 85px;
 	font-size: 12px;
 	font-family: var(--font-Roboto);
