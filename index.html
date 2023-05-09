@@ -36,17 +36,17 @@
 			<div class="search_filters_list">
 				<div class="search_filter_component" id="ingredients-component">
 					<input type="text" name="ingredients" id="ingredients" placeholder="Ingredients">
-					<i class="fa-solid fa-chevron-down"></i>
+					<i class="fa-solid fa-chevron-down" id="ingredients-icon"></i>
 					<div class="dropdown_list hidden"></div>
 				</div>
-				<div class="search_filter_component" id="appareils-component">
-					<input type="text" name="appareils" id="appareils" placeholder="Appareils">
-					<i class="fa-solid fa-chevron-down"></i>
+				<div class="search_filter_component" id="appliance-component">
+					<input type="text" name="appliance" id="appliance" placeholder="Appareils">
+					<i class="fa-solid fa-chevron-down" id="appliance-icon"></i>
 					<div class="dropdown_list hidden"></div>
 				</div>
 				<div class="search_filter_component" id="ustensils-component">
-					<input type="text" name="ustensils" id="ustensils" placeholder="Ustensils">
-					<i class="fa-solid fa-chevron-down"></i>
+					<input type="text" name="ustensils" id="ustensils" placeholder="Ustensiles">
+					<i class="fa-solid fa-chevron-down" id="ustensils-icon"></i>
 					<div class="dropdown_list hidden"></div>
 				</div>
 
@@ -66,11 +66,17 @@
 	<!-- Data -->
 	<script src="./data/recipes.js"></script>
 
+	<!-- Arrays -->
+	<script src="./scripts/arrays.js/tagsArray.js"></script>
+
 	<!-- Model -->
 	<script src="./scripts/models/Recipe.js"></script>
 
 	<!-- Template -->
 	<script src="./scripts/template/RecipeCard.js"></script>
+
+	<!-- Utils -->
+	<script src="./scripts/utils/DropdownList.js"></script>
 
 	<!-- Entry point -->
 	<script src="./scripts/App.js"></script>

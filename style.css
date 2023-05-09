@@ -143,8 +143,9 @@ main {
 	height: 70px;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
+	overflow: visible;
 	border-radius: 5px;
-	padding: 25px 15px;
 	margin-right: 15px;
 	font-size: 18px;
 	font-weight: 700;
@@ -152,17 +153,19 @@ main {
 	font-family: var(--font-Lato);
 }
 
-#ingredients-component {
+#ingredients-component, #ingredients-component .dropdown_list {
 	background-color: var(--blue);
 }
-#appareils-component {
+#appliance-component, #appliance-component .dropdown_list {
 	background-color: var(--green);
 }
-#ustensils-component {
+#ustensils-component, #ustensils-component .dropdown_list {
 	background-color: var(--orange-light);
 }
 
 .search_filter_component i {
+	margin-right: 20px;
+	margin-top: 25px;
 	border: none;
 }
 .search_filter_component i:hover {
@@ -170,9 +173,10 @@ main {
 }
 
 .search_filter_component input {
+	margin-left: 20px;
 	border: none;
 	height: 100%;
-	width: 85%;
+	width: 65%;
 	background: none;
 	color: white;
 	font-size: 18px;
@@ -181,6 +185,35 @@ main {
 
 .search_filter_component input::placeholder{
 	color: white;
+}
+
+.search_filter_component .grey-text::placeholder{
+	color: rgba(255, 254, 254, 0.667);
+	font-weight: 400;
+}
+
+.dropdown_list{
+	z-index: 1;
+	height: 360px;
+	width: 1000px;
+	padding: 0 20px;
+	border-radius: 0 0 5px 5px;
+	font-weight: 400;
+	font-size: 18px;
+}
+
+.dropdown_list ul {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	
+}
+.dropdown_list ul li {
+	width: 32%;
+	height: 10%;
 }
 
 /* 
