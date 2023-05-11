@@ -14,10 +14,16 @@ class App {
 		// Affichage des listes dans les boutons dropdown
 		const IngredientsDropdown = new DropdownList("ingredients-component", ingredientsArray, "Ingrédient");
 		IngredientsDropdown.createDropdownList();
+		IngredientsDropdown.onSearch();
+
 		const ApplianceDropdown = new DropdownList("appliance-component", applianceArray, "Appareil");
 		ApplianceDropdown.createDropdownList();
+		ApplianceDropdown.onSearch();
+
 		const UstensilsDropdown = new DropdownList("ustensils-component", ustensilsArray, "Ustensile");
 		UstensilsDropdown.createDropdownList();
+		UstensilsDropdown.onSearch();
+
 
 		// Recherche principale
 		const Search = new SearchForm(this.recipes);

@@ -36,7 +36,7 @@ class DropdownList {
 			this._list.appendChild(listElement);
 		}
 
-		this._dropContainer.appendChild(this.list);
+		this._dropContainer.appendChild(this._list);
 
 		this._arrow.addEventListener('click', () => {
 			if(this._dropContainer.classList[1] === "hidden"){
@@ -58,4 +58,38 @@ class DropdownList {
 			}
 		})
 	}
+
+	search(query){
+		this.displayListElements(this._array.filter(element => element.toLowerCase().includes(query.toLowerCase())))
+	}
+
+	clearList(){
+		this._list.innerHTML = '';
+	}
+
+	displayListElements(filteredArray){
+		this.clearList();
+
+		for(let i = 0 ; i < filteredArray.length ; i++){
+			const listElement = document.createElement('li');
+			listElement.innerText = `${filteredArray[i]}`;
+			this._list.appendChild(listElement);
+		}
+
+		this._dropContainer.appendChild(this._list);
+	}
+
+	onSearch() {
+		this._input.addEventListener('keyup', e => {
+				const query = e.target.value;
+
+				if(query.length >= 3){
+					this.search(query);
+				} else if (query.length === 0) {
+					this.displayListElements(this._array);
+				}
+			})
+	}
+
+
 }
