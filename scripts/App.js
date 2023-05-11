@@ -18,6 +18,10 @@ class App {
 		ApplianceDropdown.createDropdownList();
 		const UstensilsDropdown = new DropdownList("ustensils-component", ustensilsArray, "Ustensile");
 		UstensilsDropdown.createDropdownList();
+
+		// Recherche principale
+		const Search = new SearchForm(this.recipes);
+		Search.onSearch();
 	}
 }
 
