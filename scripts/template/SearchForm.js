@@ -27,11 +27,11 @@ class SearchForm {
 		this.displayRecipes(SearchedRecipes);
 
 		function createArray(array){
-			array.forEach(recipe => {
-				if(!SearchedRecipes.includes(recipe)){
-					SearchedRecipes.push(recipe);
+			for(let i = 0 ; i < array.length ; i++){
+				if(!SearchedRecipes.includes(array[i])){
+					SearchedRecipes.push(array[i]);
 				}
-			})
+			}
 		}
 	}
 
@@ -42,10 +42,10 @@ class SearchForm {
 	displayRecipes(Recipes) {
 		this.clearRecipesWrapper();
 
-		Recipes.forEach(Recipe => {
-			const Template = new RecipeCard(Recipe);
+		for(let i = 0 ; i < Recipes.length ; i++){
+			const Template = new RecipeCard(Recipes[i]);
 			this.$recipesWrapper.appendChild(Template.createRecipeCard());
-		})
+		}
 	}
 
 	onSearch() {
