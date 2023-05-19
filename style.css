@@ -288,3 +288,13 @@ main {
 .hidden {
 	display: none;
 }
+
+.bg-blue {
+	background-color: var(--blue);
+}
+.bg-green {
+	background-color: var(--green);
+}
+.bg-orange {
+	background-color: var(--orange-light);
+}
