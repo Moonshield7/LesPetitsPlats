@@ -14,7 +14,13 @@ class RecipeNameSearch extends Search {
 	}
 
 	filterRecipes(query){
-		return this.Recipes.filter(Recipe => Recipe.name.toLowerCase().includes(query.toLowerCase()));
+		const filteredArray = [];
+		for(let i = 0 ; i < this.Recipes.length ; i++){
+			if(this.Recipes[i].name.toLowerCase().includes(query.toLowerCase())){
+				filteredArray[filteredArray.length] = this.Recipes[i];
+			}
+		}
+		return filteredArray;
 	}
 }
 
@@ -30,8 +36,7 @@ class IngredientNameSearch extends Search {
 			
 			for(let j = 0 ; j < recipeIngredients.length ; j++){
 				if(recipeIngredients[j].ingredient.toLowerCase().includes(query.toLowerCase())){
-					console.log(recipes[i])
-					filteredByIngredients.push(recipes[i]);
+					filteredByIngredients[filteredByIngredients.length] = recipes[i];
 				}
 			}
 		}
@@ -45,7 +50,13 @@ class ApplianceNameSearch extends Search {
 	}
 
 	filterRecipes(query){
-		return this.Recipes.filter(Recipe => Recipe.appliance.toLowerCase().includes(query.toLowerCase()));
+		const filteredArray = [];
+		for(let i = 0 ; i < this.Recipes.length ; i++){
+			if(this.Recipes[i].appliance.toLowerCase().includes(query.toLowerCase())){
+				filteredArray[filteredArray.length] = this.Recipes[i];
+			}
+		}
+		return filteredArray;
 	}
 }
 
@@ -60,7 +71,7 @@ class UstensilNameSearch extends Search {
 			const recipeUstensils = recipes[i].ustensils;
 			for(let j = 0 ; j < recipeUstensils.length ; j++) {
 				if(recipeUstensils[j].toLowerCase().includes(query.toLowerCase())){
-					filteredByUstensils.push(recipes[i]);
+					filteredByUstensils[filteredByUstensils.length] = recipes[i];
 				}
 			}
 		}

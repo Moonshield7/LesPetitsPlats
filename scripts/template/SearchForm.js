@@ -28,11 +28,23 @@ class SearchForm {
 
 		function createArray(array){
 			for(let i = 0 ; i < array.length ; i++){
-				if(!SearchedRecipes.includes(array[i])){
-					SearchedRecipes.push(array[i]);
+				if(SearchedRecipes[0] === undefined){
+					SearchedRecipes[SearchedRecipes.length] = array[i];
+				}
+				else{
+					let count = 0;
+					for(let j = 0 ; j < SearchedRecipes.length ; j++){
+						if(SearchedRecipes[j] === array[i]){
+							count += 1;
+						}
+					}
+					if(count === 0){
+						SearchedRecipes[SearchedRecipes.length] = array[i];
+					}
 				}
 			}
 		}
+		
 	}
 
 	clearRecipesWrapper() {
