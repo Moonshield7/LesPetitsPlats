@@ -21,6 +21,7 @@ class RecipeCard {
 		// Image grisée
 		const imgPlaceholder = document.createElement('div');
 		imgPlaceholder.classList.add("img-placeholder");
+		imgPlaceholder.addEventListener('click', () => console.log(this._recipe))
 
 		// Titre et temps de préparation
 		const recipeTilte = document.createElement('div');

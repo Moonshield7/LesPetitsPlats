@@ -1,5 +1,5 @@
 class DropdownList {
-	constructor(componentName, array, type){
+	constructor(componentName, array, type, recipes){
 		this._component = document.getElementById(componentName);
 		this._dropContainer = this.component.querySelector('.dropdown_list');
 		this._input = this.component.querySelector('input');
@@ -7,10 +7,11 @@ class DropdownList {
 		this._list = document.createElement('ul');
 		this._array = array;
 		this._type = type;
+		this.Recipes = recipes;
 
 		this.selectedTags = new Array();
 		this.$filterWrapper = document.querySelector('.search_filters-active');
-		this.$recipesWrapper =document.querySelector('.recipes');
+		this.$recipesWrapper = document.querySelector('.recipes');
 	}
 
 	get component(){
@@ -90,6 +91,7 @@ class DropdownList {
 
 				if(query.length >= 3){
 					this.search(query);
+					console.log(this.search(query))
 				} else if (query.length === 0) {
 					this.displayListElements(this._array);
 				}
@@ -97,47 +99,18 @@ class DropdownList {
 			
 	}
 
-	// Qu'est-ce qui ne va pas ?
-	// L'ajout et le retrait de tag fonctionne bien, ok
-	// Quand on fait une recherche de tag : ajout et retrait fonctionnent toujours MAIS !!!
-	// l'élément retiré n'est pas le bon : on retire l'élément à l'index cliqué (donc 0 ou 1 en général après recherche) dans le tableau de tous les tags = erreur, un élément disparaît et un autre devient double (une fois dans tags, une fois dans liste)
-
 	onTagSearch(){
 		this.addTag();
 		this.removeTag();
+		if(this.selectedTags.length > 0){
+			this.displayRecipes();
+		}
+		
 	}
 
 	addTag(){
 		const listElements = this._list.querySelectorAll('li');
 		const blob = this._array;
-
-		// listElements.forEach(li => {
-		// 	li.addEventListener('click', (e) => {
-		// 		e.preventDefault();
-		// 		e.stopImmediatePropagation();
-
-		// 		this.selectedTags.push(li.innerText);
-
-		// 		const tag = document.createElement('button');
-		// 		tag.classList.add('filter_button');
-		// 		tag.innerText = `${li.innerText}`;
-
-		// 		if(this._type === 'Appareil'){
-		// 			tag.classList.add('bg-green')
-		// 		} else if(this._type === 'Ustensile'){
-		// 			tag.classList.add('bg-orange')
-		// 		} else {
-		// 			tag.classList.add('bg-blue')
-		// 		}
-
-		// 		this.$filterWrapper.appendChild(tag);
-
-		// 		const index = this._array.indexOf(li);
-		// 		this._array.splice(index, 1)
-		// 		this.displayListElements(this._array);
-		// 		this.onTagSearch();
-		// 	})
-		// })
 
 		for(let i = 0 ; i < listElements.length ; i++){
 			listElements[i].addEventListener('click', (e) => {
@@ -158,11 +131,10 @@ class DropdownList {
 					tag.classList.add('bg-blue')
 				}
 
-				this.$filterWrapper.appendChild(tag);
+				this.$filterWrapper.appendChild(tag);	
 
-				this._array.splice(i, 1);
-					
-				console.log(this._array.indexOf(listElements[i]));
+				this._array = this._array.filter(element => element !== listElements[i].innerText);
+
 				this.displayListElements(this._array);
 				this.onTagSearch();
 
@@ -193,12 +165,45 @@ class DropdownList {
 		this.$recipesWrapper.innerHTML = "";
 	}
 
-	displayRecipes(Recipes) {
+	displayRecipes() {
 		this.clearRecipesWrapper();
+		const filteredRecipes = []
 
-		Recipes.forEach(Recipe => {
-			const Template = new RecipeCard(Recipe);
-			this.$recipesWrapper.appendChild(Template.createRecipeCard());
+		
+		recipes.forEach(Recipe => {
+			if(this._type === "Appareil"){
+				this.selectedTags.forEach(tag => {
+					if(Recipe.appliance.toLowerCase() === tag){
+						filteredRecipes.push(Recipe);
+					}
+				})
+			}
+			if(this._type === "Ustensile"){
+				this.selectedTags.forEach(tag => {
+					if(Recipe.ustensils.includes(tag)){
+						filteredRecipes.push(Recipe);
+					}
+				})				
+			}
+			if(this._type === "Ingrédient"){
+				const ingredients = Recipe.ingredients;
+				console.log(ingredients)
+				ingredients.foreach(ing => {
+					this.selectedTags.forEach(tag => {
+						if(ing.ingredient.includes(tag)){
+							filteredRecipes.push(Recipe);
+						}
+					})	
+				})
+			
+			}
+			
+		})
+
+		console.log(filteredRecipes)
+		filteredRecipes.forEach(recipe => {
+			const Template = new RecipeCard(recipe);
+			this.$recipesWrapper.appendChild(Template.createRecipeCard(recipe));
 		})
 	}
 

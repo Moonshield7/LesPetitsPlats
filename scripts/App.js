@@ -1,15 +1,19 @@
 class App {
 	constructor() {
-		this.recipesContainer = document.querySelector('.recipes');
-		this.recipes = recipes;
+		this.$recipesWrapper = document.querySelector('.recipes');
+		this.Recipes = recipes;
 	}
 
 	async main() {
 		// Affichage de toutes les recettes
-		this.recipes.forEach(recipe => {
+		this.Recipes.forEach(recipe => {
 			const Template = new RecipeCard(recipe);
-			this.recipesContainer.appendChild(Template.createRecipeCard(recipe));
+			this.$recipesWrapper.appendChild(Template.createRecipeCard(recipe));
 		})
+
+		// Recherche principale
+		const Search = new SearchForm(this.Recipes);
+		Search.onSearch();
 
 		// Affichage des listes dans les boutons dropdown
 		const IngredientsDropdown = new DropdownList("ingredients-component", ingredientsArray, "Ingrédient");
@@ -28,9 +32,7 @@ class App {
 		UstensilsDropdown.onTagSearch();
 
 
-		// Recherche principale
-		const Search = new SearchForm(this.recipes);
-		Search.onSearch();
+
 
 		// Recherche par tags
 		// const IngredientTagSearch = new TagSearch(this.recipes, IngredientsDropdown);
