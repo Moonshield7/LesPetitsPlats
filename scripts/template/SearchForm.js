@@ -25,6 +25,7 @@ class SearchForm {
 		createArray(SearchByUstensil);
 
 		this.displayRecipes(SearchedRecipes);
+		return SearchedRecipes;
 
 		function createArray(array){
 			array.forEach(recipe => {
@@ -55,7 +56,9 @@ class SearchForm {
 				const query = e.target.value;
 
 				if(query.length >= 3){
-					this.search(query);
+					const SearchedRecipes = this.search(query);
+					console.log(SearchedRecipes)
+					return SearchedRecipes;
 				} else if (query.length === 0) {
 					this.displayRecipes(this.Recipes);
 				}
