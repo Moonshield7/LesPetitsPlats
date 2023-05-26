@@ -57,8 +57,8 @@ class SearchForm {
 
 				if(query.length >= 3){
 					const SearchedRecipes = this.search(query);
-					console.log(SearchedRecipes)
-					return SearchedRecipes;
+					GlobalSearchedRecipes = SearchedRecipes;
+					// return SearchedRecipes;
 				} else if (query.length === 0) {
 					this.displayRecipes(this.Recipes);
 				}

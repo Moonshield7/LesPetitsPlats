@@ -1,13 +1,13 @@
 class DropdownList {
-	constructor(componentName, array, type, recipes){
+	constructor(componentName, type, recipes){
 		this._component = document.getElementById(componentName);
 		this._dropContainer = this.component.querySelector('.dropdown_list');
 		this._input = this.component.querySelector('input');
 		this._arrow = this.component.querySelector('i')
 		this._list = document.createElement('ul');
-		this._array = array;
+		this._array = new Array();
 		this._type = type;
-		this.Recipes = recipes;
+		this._recipes = recipes;
 
 		this.selectedTags = new Array();
 		this.$filterWrapper = document.querySelector('.search_filters-active');
@@ -34,7 +34,40 @@ class DropdownList {
 		return this._list;
 	}
 
+	createArray(){
+		if(this._type === "Ingrédient"){
+			this._recipes.forEach(recipe => {
+				const recipeIngredients = recipe.ingredients;
+				recipeIngredients.forEach(ing => {
+					if(!this._array.includes(ing.ingredient.toLowerCase())){
+						this._array.push(ing.ingredient.toLowerCase());
+					}
+				})
+			})
+		}
+		if(this._type === "Appareil"){
+			this._recipes.forEach(recipe => {
+				if(!this._array.includes(recipe.appliance.toLowerCase())){
+					this._array.push(recipe.appliance.toLowerCase());
+				}
+			})
+		}
+		if(this._type === "Ustensile"){
+			this._recipes.forEach(recipe => {
+				const recipeUstensils = recipe.ustensils;
+				recipeUstensils.forEach(ust => {
+					if(!this._array.includes(ust.toLowerCase())){
+						this._array.push(ust.toLowerCase());
+					}
+				})
+			})
+		}
+	}
+
 	createDropdownList(){
+		this._dropContainer.innerHTML = '';
+		this.createArray();
+		console.log(this._array)
 		for(let i = 0 ; i < this._array.length ; i++){
 			const listElement = document.createElement('li');
 			listElement.innerText = `${this._array[i]}`;
@@ -42,9 +75,10 @@ class DropdownList {
 		}
 
 		this._dropContainer.appendChild(this._list);
-
+		let countClicks = 0
 		this._arrow.addEventListener('click', () => {
-			if(this._dropContainer.classList[1] === "hidden"){
+			countClicks += 1;
+			if(countClicks%2 !== 0){
 				this._dropContainer.classList.remove("hidden");
 				this._component.style.width = "640px";
 				this._component.style.borderRadius = "5px 5px 0 0";
@@ -170,7 +204,7 @@ class DropdownList {
 		const filteredRecipes = []
 
 		
-		recipes.forEach(Recipe => {
+		this._recipes.forEach(Recipe => {
 			if(this._type === "Appareil"){
 				this.selectedTags.forEach(tag => {
 					if(Recipe.appliance.toLowerCase() === tag){
@@ -187,15 +221,15 @@ class DropdownList {
 			}
 			if(this._type === "Ingrédient"){
 				const ingredients = Recipe.ingredients;
-				console.log(ingredients)
-				ingredients.foreach(ing => {
+				for(let i = 0 ; i < ingredients.length ; i++){
+					
 					this.selectedTags.forEach(tag => {
-						if(ing.ingredient.includes(tag)){
+						if(ingredients[i].ingredient.toLowerCase().includes(tag)){
+							console.log(tag)
 							filteredRecipes.push(Recipe);
 						}
-					})	
-				})
-			
+					})
+				}			
 			}
 			
 		})
