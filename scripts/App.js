@@ -15,12 +15,13 @@ class App {
 		const Search = new SearchForm(this.Recipes);
 		Search.onSearch();
 
+		const mainSearchBar = document.getElementById('main_searchbar')
 		
-		document.addEventListener('keyup', (e) => {
+		mainSearchBar.addEventListener('keyup', (e) => {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 
-			console.log("current :",GlobalSearchedRecipes);
+			// console.log("current :",GlobalSearchedRecipes);
 			const IngredientsDropdown2 = new DropdownList("ingredients-component", "Ingrédient", GlobalSearchedRecipes);
 			IngredientsDropdown2.createDropdownList();
 			IngredientsDropdown2.onSearch();

@@ -8,8 +8,9 @@ class DropdownList {
 		this._array = new Array();
 		this._type = type;
 		this._recipes = recipes;
+		this._filteredRecipes = new Array();
 
-		this.selectedTags = new Array();
+		// this.selectedTags = new Array();
 		this.$filterWrapper = document.querySelector('.search_filters-active');
 		this.$recipesWrapper = document.querySelector('.recipes');
 	}
@@ -34,6 +35,7 @@ class DropdownList {
 		return this._list;
 	}
 
+	// Création du tableau de tags en fonction du type
 	createArray(){
 		if(this._type === "Ingrédient"){
 			this._recipes.forEach(recipe => {
@@ -64,17 +66,20 @@ class DropdownList {
 		}
 	}
 
+	// Création de la liste qui s'affiche lorsque l'on clique sur la flèche du bouton.
 	createDropdownList(){
+		// On vide la div contenant la liste
 		this._dropContainer.innerHTML = '';
+		// On créé le tableau des tags possibles en fonction des recettes affichées (après recherche principale ou non)
 		this.createArray();
-		console.log(this._array)
 		for(let i = 0 ; i < this._array.length ; i++){
 			const listElement = document.createElement('li');
 			listElement.innerText = `${this._array[i]}`;
 			this._list.appendChild(listElement);
 		}
-
 		this._dropContainer.appendChild(this._list);
+
+		// On initialise un compteur de clic pour ouvrir et fermer la partie dropdown. Si le compteur est impair : la liste est affichée. S'il est pair : elle est cachée.
 		let countClicks = 0
 		this._arrow.addEventListener('click', () => {
 			countClicks += 1;
@@ -98,15 +103,18 @@ class DropdownList {
 		})
 	}
 
+	// La fonction search permet de rechercher la liste des tags en fonction de la recherche (query)effectuée dans chaque champ de tag et de l'afficher grâce à displayListElements.
 	search(query){
 		this.displayListElements(this._array.filter(element => element.toLowerCase().includes(query.toLowerCase())));
 		this.onTagSearch();
 	}
 
+	// clearList permet de vider le contenu de la liste
 	clearList(){
 		this._list.innerHTML = '';
 	}
 
+	// displayListElements récupère le tableau de tags filtré et l'affiche dans le DOM
 	displayListElements(filteredArray){
 		this.clearList();
 
@@ -119,13 +127,13 @@ class DropdownList {
 		this._dropContainer.appendChild(this._list);
 	}
 
+	// onSearch lance la recherche par tag dès lors que trois caractères ou plus sont entrés dans le champ de recherche par tag. S'il y a moins de 3 caractères, toutes les recettes (ou celles résultant de la recherche principale) sont affichées
 	onSearch() {
 		this._input.addEventListener('keyup', e => {
 				let query = e.target.value;
 
 				if(query.length >= 3){
 					this.search(query);
-					console.log(this.search(query))
 				} else if (query.length === 0) {
 					this.displayListElements(this._array);
 				}
@@ -133,25 +141,29 @@ class DropdownList {
 			
 	}
 
+	// onTagSearch permet l'ajout et le retrait de tags, et affiche les recettes filtrées avec les tags sélectionnés s'il y en a au moins un
 	onTagSearch(){
 		this.addTag();
 		this.removeTag();
-		if(this.selectedTags.length > 0){
-			this.displayRecipes();
-		}
+		// if(this.selectedTags.length > 0){
+		// 	this.displayRecipes();
+		// 	console.log("flap", this._filteredRecipes)
+		// }
 		
 	}
 
+	// Ajout d'un tag
 	addTag(){
+		// On récupère tous les tags affichés dans le dropdown, et on y ajoute un écouteur d'évènement pour permettre d'intéragir avec. 
 		const listElements = this._list.querySelectorAll('li');
-		const blob = this._array;
 
 		for(let i = 0 ; i < listElements.length ; i++){
 			listElements[i].addEventListener('click', (e) => {
 				e.preventDefault();
 				e.stopImmediatePropagation();
 
-				this.selectedTags.push(listElements[i].innerText);
+				// Lorsque l'on clique sur l'un des éléments de la liste, son text est stocké dans le tableau selectedTags, et on créé le tag dans le DOM.
+				currentTags.push(listElements[i].innerText);
 
 				const tag = document.createElement('button');
 				tag.classList.add('filter_button');
@@ -167,16 +179,22 @@ class DropdownList {
 
 				this.$filterWrapper.appendChild(tag);	
 
+				// On retire le tag cliqué de la liste dans le dropdown, et on affiche la liste mise à jour
 				this._array = this._array.filter(element => element !== listElements[i].innerText);
 
+				console.log("tags added", currentTags);
 				this.displayListElements(this._array);
+				this.displayRecipes();
 				this.onTagSearch();
+
 
 			})
 		}
 	}
 
+	// Retrait d'un tag
 	removeTag(){
+		// On récupère tous les tags sélectionnés, et on y ajoute un écouteur d'évènement.
 		const listTags = this.$filterWrapper.querySelectorAll('.filter_button');
 		
 		for(let i = 0 ; i < listTags.length ; i++){
@@ -184,12 +202,35 @@ class DropdownList {
 				e.preventDefault();
 				e.stopImmediatePropagation();
 
-				this.selectedTags.splice(i, 1);
+				// Lorsque l'on click sur l'un des tags, il est retiré, et ajouté dans le tableau des tags
+				currentTags.splice(i, 1);
 				listTags[i].remove();
 				this._array.push(listTags[i].innerText);
 
+				console.log("tags removed", currentTags);
+				console.log("recettes", this._filteredRecipes);
+				this._recipes.forEach(Recipe => {
+					if(this._type === "Appareil"){
+						if(Recipe.appliance.toLowerCase() !== listTags[i]){
+							if(!this._filteredRecipes.includes(Recipe)){
+								this._filteredRecipes.push(Recipe);
+							}
+						}
+					}
+					if(this._type === "Ustensile"){
+							if(!Recipe.ustensils.includes(listTags[i])){
+								if(!this._filteredRecipes.includes(Recipe)){
+									this._filteredRecipes.push(Recipe);
+								}
+							}			
+					}
+				})
+				console.log("recettes sans le filtre", this._filteredRecipes);
+				// On affiche la liste mise à jour
 				this.displayListElements(this._array);
+				this.displayRecipes();
 				this.onTagSearch();
+				
 
 			})
 		}
@@ -199,43 +240,42 @@ class DropdownList {
 		this.$recipesWrapper.innerHTML = "";
 	}
 
+	// Affichage des recettes
 	displayRecipes() {
 		this.clearRecipesWrapper();
-		const filteredRecipes = []
 
-		
+		// On passe en revue toutes les recettes actuellement affichées, ainsi que tous les tags sélectionnés, et on les compare : si une recette contient l'un des tags, elle est ajoutée au tableau de recettes filtrées
+
+		// ATTENTION : la fonctionnalité n'est pas bonne : à revoir -> on peut accumuler les tags
 		this._recipes.forEach(Recipe => {
 			if(this._type === "Appareil"){
-				this.selectedTags.forEach(tag => {
+				currentTags.forEach(tag => {
 					if(Recipe.appliance.toLowerCase() === tag){
-						filteredRecipes.push(Recipe);
+						this._filteredRecipes.push(Recipe);
 					}
 				})
 			}
 			if(this._type === "Ustensile"){
-				this.selectedTags.forEach(tag => {
+				currentTags.forEach(tag => {
 					if(Recipe.ustensils.includes(tag)){
-						filteredRecipes.push(Recipe);
+						this._filteredRecipes.push(Recipe);
 					}
 				})				
 			}
 			if(this._type === "Ingrédient"){
 				const ingredients = Recipe.ingredients;
-				for(let i = 0 ; i < ingredients.length ; i++){
-					
-					this.selectedTags.forEach(tag => {
-						if(ingredients[i].ingredient.toLowerCase().includes(tag)){
-							console.log(tag)
-							filteredRecipes.push(Recipe);
+				ingredients.forEach(ingredient => {
+					currentTags.forEach(tag => {
+						if(ingredient.ingredient.toLowerCase().includes(tag)){
+								this._filteredRecipes.push(Recipe);
 						}
 					})
-				}			
+				})			
 			}
-			
 		})
 
-		console.log(filteredRecipes)
-		filteredRecipes.forEach(recipe => {
+		// On affiche toutes les recettes contenue dans le tableau de recettes filtrées
+		this._filteredRecipes.forEach(recipe => {
 			const Template = new RecipeCard(recipe);
 			this.$recipesWrapper.appendChild(Template.createRecipeCard(recipe));
 		})

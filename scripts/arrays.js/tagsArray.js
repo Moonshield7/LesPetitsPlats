@@ -1,5 +1,7 @@
 let GlobalSearchedRecipes = recipes;
 
+let currentTags = [];
+
 // // Tableau de tous les ingrédients
 // const ingredientsArray = []
 // recipes.forEach(recipe => {
