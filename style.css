@@ -303,3 +303,8 @@ main {
 .bg-orange {
 	background-color: var(--orange-light);
 }
+
+.is-active {
+	color:#d4a8ef;
+	/* display: none; */
+}
