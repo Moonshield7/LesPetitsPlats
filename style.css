@@ -123,7 +123,9 @@ main {
 }
 
 .filter_button {
-	width: 107px;
+	margin-right: 10px;
+	min-width: 107px;
+	padding: 5px;
 	height: 37px;
 	border: none;
 	border-radius: 5px;
@@ -132,6 +134,19 @@ main {
 	font-weight: 700;
 	background-color: var(--blue);
 	font-family: var(--font-Lato);
+}
+
+.filter_button:hover{
+	cursor: pointer;
+}
+
+.filter_button::first-letter{
+	text-transform: capitalize;
+}
+
+.filter_button i {
+	font-size: 18px;
+	margin-left: 5px;
 }
 
 /* Recherche par filtres */
@@ -219,6 +234,10 @@ main {
 .dropdown_list ul li {
 	width: 32%;
 	height: 10%;
+}
+
+.filter-list::first-letter {
+	text-transform: capitalize;
 }
 
 /* 
@@ -311,5 +330,5 @@ main {
 
 .is-active {
 	color:#d4a8ef;
-	/* display: none; */
+	display: none;
 }

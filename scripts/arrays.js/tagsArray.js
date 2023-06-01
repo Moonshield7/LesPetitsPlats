@@ -7,6 +7,7 @@ let currentFilters = {
 const recipeCount = document.querySelector("#recipe-count");
 const noResults = document.querySelector("#no-results");
 const recipesContainer = document.querySelector(".recipes");
+const filtersWrapper = document.querySelector(".search_filters-active");
 
 // Set de tous les ingrédients
 const ingredientList = document.getElementById("ingredients-list");
@@ -116,7 +117,6 @@ function openDropdownList(componentName, type){
 }
 
 // Gestion de ce qu'il se produit quand on clique sur l'un des tags dans la liste. S'il est inactif : il passe actif et est ajouté au tableau des filtres choisis. S'il est déjà actif, il repasse inactif et est retiré du tableau.
-// -> A mettre en place : faire disparaître le tag de la liste lorsqu'il est actif et l'afficher en tant que tag en dessous de la barre principale
 function handleLiClick(e, key, param) {
 	const listElement = e.target;
 	const listElementState = listElement.getAttribute("data-state");
@@ -124,12 +124,49 @@ function handleLiClick(e, key, param) {
 		listElement.classList.add("is-active");
 		listElement.setAttribute("data-state", "active");
 		currentFilters[key].push(param);
-		handleFilterPosts(currentFilters);
+		handleFilterRecipes(currentFilters);
+		createFilterButton(key, param, listElement)
+	} 
+}
+
+// Création du bouton pour le filtre sélectionné, sur lequel on peut cliquer ensuite pour le retirer
+function createFilterButton(key, param, listElement){
+	const filterButton = document.createElement('button');
+	filterButton.classList.add('filter_button');
+	filterButton.innerHTML = `${param} <i class="far fa-times-circle"></i>`;
+	
+	if(key === 'appliance'){
+		filterButton.classList.add('bg-green')
+	} else if(key === 'ustensils'){
+		filterButton.classList.add('bg-orange')
 	} else {
+		filterButton.classList.add('bg-blue')
+	}
+
+	filterButton.addEventListener('click', e => {
 		listElement.classList.remove("is-active");
 		listElement.setAttribute("data-state", "inactive");
 		currentFilters[key] = currentFilters[key].filter((item) => item !== param);
-		handleFilterPosts(currentFilters);
+		filterButton.remove();
+
+		handleFilterRecipes(currentFilters);
+
+		toggleActiveFiltersContainer();
+	})
+
+	filtersWrapper.appendChild(filterButton);
+
+	toggleActiveFiltersContainer();
+	
+
+}
+
+// Afficher ou (masquer si elle est vide) la div contenant les tags actifs
+function toggleActiveFiltersContainer(){
+	if(filtersWrapper.querySelectorAll('button').length > 0){
+		filtersWrapper.classList.remove("hidden");
+	} else {
+		filtersWrapper.classList.add("hidden");
 	}
 }
 
@@ -141,7 +178,8 @@ function displayRecipes(recipesArray) {
 	})
 }
 
-function handleFilterPosts(filters){
+//
+function handleFilterRecipes(filters){
 	let filteredRecipes = [...GlobalSearchedRecipes];
 
 	// Dans le cas des appareils :
