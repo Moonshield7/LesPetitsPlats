@@ -49,6 +49,11 @@ h3 {
 	text-align: right;
 }
 
+p {
+	font-family: var(--font-Lato);
+	font-weight: 500;
+}
+
 ul {
 	list-style: none;
 }

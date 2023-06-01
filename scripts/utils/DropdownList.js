@@ -35,31 +35,6 @@ class DropdownList {
 		return this._list;
 	}
 
-	// Création de la liste qui s'affiche lorsque l'on clique sur la flèche du bouton.
-	openDropdownList(){
-		// On initialise un compteur de clic pour ouvrir et fermer la partie dropdown. Si le compteur est impair : la liste est affichée. S'il est pair : elle est cachée.
-		let countClicks = 0
-		this._arrow.addEventListener('click', () => {
-			countClicks += 1;
-			if(countClicks%2 !== 0){
-				this._dropContainer.classList.remove("hidden");
-				this._component.style.width = "640px";
-				this._component.style.borderRadius = "5px 5px 0 0";
-				this._input.setAttribute("placeholder", `Rechercher un ${this._type.toLowerCase()}`);
-				this._input.classList.add("grey-text");
-				this._arrow.classList.add("fa-chevron-up");
-				this._arrow.classList.remove("fa-chevron-down");
-			} else {
-				this._dropContainer.classList.add("hidden");
-				this._component.style.width = "170px";
-				this._component.style.borderRadius = "5px 5px 5px 5px";
-				this._input.setAttribute("placeholder", this._type + "s");
-				this._input.classList.remove("grey-text");
-				this._arrow.classList.remove("fa-chevron-up");
-				this._arrow.classList.add("fa-chevron-down");
-			}
-		})
-	}
 
 	// La fonction search permet de rechercher la liste des tags en fonction de la recherche (query)effectuée dans chaque champ de tag et de l'afficher grâce à displayListElements.
 	search(query){
