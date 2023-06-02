@@ -53,6 +53,7 @@ function createApplianceList(recipesArray) {
 }
 
 function createUstensilsList(recipesArray){
+	ustensilsList.innerHTML = "";
 	ustensilsData.length = 0;
 	recipesArray.forEach(recipe => {
 		const recipeUstensils = recipe.ustensils;
@@ -74,15 +75,18 @@ function createTagsLists(recipesArray){
 
 // Création des éléments li du dropdown contenant la liste de tags
 function createFilter(key, param, container) {
-	const filterLi = document.createElement("li");
-	filterLi.className = "filter-list";
-	filterLi.innerText = param;
-	filterLi.setAttribute("data-state", "inactive");
-	filterLi.addEventListener("click", (e) => {
+	if(!currentFilters.appliance.includes(param) && !currentFilters.ingredients.includes(param) && !currentFilters.ustensils.includes(param)){
+		const filterLi = document.createElement("li");
+		filterLi.className = "filter-list";
+		filterLi.innerText = param;
+		filterLi.setAttribute("data-state", "inactive");
+		filterLi.addEventListener("click", (e) => {
 		handleLiClick(e, key, param, container)
 	});
 
 	container.append(filterLi)
+	}
+	
 }
 
 // Ouverture du dropdown container :
@@ -126,6 +130,7 @@ function handleLiClick(e, key, param) {
 		currentFilters[key].push(param);
 		handleFilterRecipes(currentFilters);
 		createFilterButton(key, param, listElement)
+		createTagsLists(handleFilterRecipes(currentFilters))
 	} 
 }
 
@@ -149,8 +154,7 @@ function createFilterButton(key, param, listElement){
 		currentFilters[key] = currentFilters[key].filter((item) => item !== param);
 		filterButton.remove();
 
-		handleFilterRecipes(currentFilters);
-
+		createTagsLists(handleFilterRecipes(currentFilters))
 		toggleActiveFiltersContainer();
 	})
 
@@ -211,9 +215,111 @@ function handleFilterRecipes(filters){
 
 	recipesContainer.innerHTML = "";
 	filteredRecipes.map(recipe => createRecipe(recipe));
+	return filteredRecipes;
 }
 
 function createRecipe(recipe){
 	const Template = new RecipeCard(recipe);
 	recipesContainer.appendChild(Template.createRecipeCard(recipe));
 }
+
+// ### PARTIE RECHERCHE DE TAGS ###
+
+// Appliance
+
+function applianceTagSearch(query){
+	createApplianceList(handleFilterRecipes(currentFilters).filter(element => element.appliance.toLowerCase().includes(query.toLowerCase())));
+}
+
+function onApplianceTagSearch(){
+	const applianceInput = document.getElementById('appliance');
+	applianceInput.addEventListener('keyup', e => {
+		let query = e.target.value;
+
+		if(query.length >= 3){
+			applianceTagSearch(query)
+		} else if (query.length === 0) {
+			createApplianceList(handleFilterRecipes(currentFilters));
+		}
+	})
+}
+
+// Ustensils
+
+function ustensilTagSearch(query){
+	ustensilsList.innerHTML = ""
+	handleFilterRecipes(currentFilters)
+	const filteredUstensilsData = ustensilsData.filter(ust => ust.includes(query));
+	filteredUstensilsData.forEach(ustensil => {
+		if(!currentFilters.ustensils.includes(ustensil)){
+			const filterLi = document.createElement("li");
+			filterLi.className = "filter-list";
+			filterLi.innerText = ustensil;
+			filterLi.setAttribute("data-state", "inactive");
+			filterLi.addEventListener("click", (e) => {
+				handleLiClick(e, "ustensils", ustensil, ustensilsList)
+			});
+			ustensilsList.append(filterLi)
+		}
+	});
+}
+
+
+function onUstensilsTagSearch(){
+	const input = document.getElementById('ustensils');
+	input.addEventListener('keyup', e => {
+		let query = e.target.value;
+
+		if(query.length >= 3){
+			ustensilTagSearch(query)
+		} else if (query.length === 0) {
+			createUstensilsList(handleFilterRecipes(currentFilters));
+		}
+	})
+}
+
+// Ingredients
+
+
+function ingredientsTagSearch(query){
+	ingredientList.innerHTML = ""
+	handleFilterRecipes(currentFilters)
+	const blob = ingredientsData.filter(ing => ing.includes(query));
+	console.log(blob)
+	blob.forEach(ingredient => {
+		if(!currentFilters.ingredients.includes(ingredient)){
+			const filterLi = document.createElement("li");
+			filterLi.className = "filter-list";
+			filterLi.innerText = ingredient;
+			filterLi.setAttribute("data-state", "inactive");
+			filterLi.addEventListener("click", (e) => {
+				handleLiClick(e, "ingredients", ingredient, ingredientList)
+			});
+	
+			ingredientList.append(filterLi)
+		}
+
+	
+	});
+}
+
+function onIngredientsTagSearch(){
+	const input = document.getElementById('ingredients');
+	input.addEventListener('keyup', e => {
+		let query = e.target.value;
+
+		if(query.length >= 3){
+			ingredientsTagSearch(query)
+		} else if (query.length === 0) {
+			createIngredientsList(handleFilterRecipes(currentFilters));
+		}
+	})
+}
+
+function onTagSearch(){
+	onIngredientsTagSearch();
+	onApplianceTagSearch();
+	onUstensilsTagSearch()
+}
+
+onTagSearch();
