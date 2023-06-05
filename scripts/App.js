@@ -18,9 +18,7 @@ class App {
 
 		const mainSearchBar = document.getElementById('main_searchbar')
 		mainSearchBar.addEventListener('keyup', e => {
-			console.log(GlobalSearchedRecipes)
 			createTagsLists(GlobalSearchedRecipes)
-			console.log(applianceData)
 		})
 	}
 }
