@@ -5,6 +5,7 @@ class App {
 
 	async main() {
 		displayRecipes(recipes)
+		onTagSearch();
 
 		// Recherche principale
 		const Search = new SearchForm(this.Recipes);

@@ -161,8 +161,6 @@ function createFilterButton(key, param, listElement){
 	filtersWrapper.appendChild(filterButton);
 
 	toggleActiveFiltersContainer();
-	
-
 }
 
 // Afficher ou (masquer si elle est vide) la div contenant les tags actifs
@@ -182,6 +180,43 @@ function displayRecipes(recipesArray) {
 	})
 }
 
+function intersection(first){
+	
+	first = new Set(first);
+	let intersection = [...first]
+
+	if(currentFilters.ingredients.length > 0){
+		for(let i = 0 ; i < currentFilters.ingredients.length ; i++){
+			let second = new Set();
+			GlobalSearchedRecipes.forEach(recipe => {
+				recipe.ingredients.forEach(ings => {
+					if(ings.ingredient.toLowerCase().includes(currentFilters.ingredients[i])){
+						second.add(recipe)
+					}
+				})
+			})
+			intersection = intersection.filter(item => second.has(item))
+		}
+	}
+	if(currentFilters.ustensils.length > 0) {
+		for(let i = 0 ; i < currentFilters.ustensils.length ; i++){
+			let third = new Set();
+			GlobalSearchedRecipes.forEach(recipe => {
+				recipe.ustensils.forEach(ust => {
+					if(ust.toLowerCase().includes(currentFilters.ustensils[i])){
+						third.add(recipe)
+					}
+				})
+			})
+			intersection = intersection.filter(item => third.has(item))
+		}
+		
+	}
+	return intersection
+}
+
+
+
 //
 function handleFilterRecipes(filters){
 	let filteredRecipes = [...GlobalSearchedRecipes];
@@ -199,6 +234,7 @@ function handleFilterRecipes(filters){
 			}))
 	}
 
+	//Dans le cas des ingrédients :
 	if(filters.ingredients.length > 0){
 		filteredRecipes = filteredRecipes.filter(recipe =>
 			recipe.ingredients.some(recipeIngredient => {
@@ -214,8 +250,9 @@ function handleFilterRecipes(filters){
 	}
 
 	recipesContainer.innerHTML = "";
-	filteredRecipes.map(recipe => createRecipe(recipe));
-	return filteredRecipes;
+
+	intersection(filteredRecipes).map(recipe => createRecipe(recipe));
+	return intersection(filteredRecipes);
 }
 
 function createRecipe(recipe){
@@ -279,14 +316,11 @@ function onUstensilsTagSearch(){
 }
 
 // Ingredients
-
-
 function ingredientsTagSearch(query){
 	ingredientList.innerHTML = ""
 	handleFilterRecipes(currentFilters)
-	const blob = ingredientsData.filter(ing => ing.includes(query));
-	console.log(blob)
-	blob.forEach(ingredient => {
+	const filteredIngredients = ingredientsData.filter(ing => ing.includes(query));
+	filteredIngredients.forEach(ingredient => {
 		if(!currentFilters.ingredients.includes(ingredient)){
 			const filterLi = document.createElement("li");
 			filterLi.className = "filter-list";
@@ -298,8 +332,6 @@ function ingredientsTagSearch(query){
 	
 			ingredientList.append(filterLi)
 		}
-
-	
 	});
 }
 
@@ -321,5 +353,3 @@ function onTagSearch(){
 	onApplianceTagSearch();
 	onUstensilsTagSearch()
 }
-
-onTagSearch();

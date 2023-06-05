@@ -58,6 +58,12 @@ class SearchForm {
 				if(query.length >= 3){
 					const SearchedRecipes = this.search(query);
 					GlobalSearchedRecipes = SearchedRecipes;
+
+					if(SearchedRecipes.length == 0) {
+						noResults.innerText = " Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+					} else {
+						noResults.innerText = "";
+					}
 				} else if (query.length === 0) {
 					GlobalSearchedRecipes = recipes;
 					this.displayRecipes(GlobalSearchedRecipes);
