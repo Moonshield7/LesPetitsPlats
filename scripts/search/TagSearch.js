@@ -27,6 +27,7 @@ const ustensilsData = [...new Set()];
 // 				################################
 
 // Création des différents sets de tags pour les dropdown lists
+// Pour les ingrédients : on parcourt la liste des recettes, et pour chacune, on récupère le tableau d'ingrédients (qui associe le nom à la quantité). On parcourt ensuite ce tableau pour récupérer "ingredient" qui correspond au nom, et on vérifie qu'il n'est pas déjà inclus dans ingredientsData avant de l'y ajouter.
 function createIngredientsList(recipesArray){
 	ingredientList.innerHTML = "";
 	ingredientsData.length = 0;
@@ -41,6 +42,7 @@ function createIngredientsList(recipesArray){
 	ingredientsData.map((ingredient) => createFilter("ingredients", ingredient, ingredientList));
 }
 
+// Pour les appareils : plus simple, car un seul appareil par recette, qu'on récupère au premier forEach
 function createApplianceList(recipesArray) {
 	applianceList.innerHTML = "";
 	applianceData.length = 0;
@@ -52,6 +54,7 @@ function createApplianceList(recipesArray) {
 	applianceData.map((appliance) => createFilter("appliance", appliance, applianceList));
 }
 
+// Pour les ustensiles, même logique que pour les ingrédients, avec un tableau plus simple
 function createUstensilsList(recipesArray){
 	ustensilsList.innerHTML = "";
 	ustensilsData.length = 0;
@@ -180,6 +183,7 @@ function displayRecipes(recipesArray) {
 	})
 }
 
+// Fonction qui permet de faire l'intersection entre le tableau de recettes passé en paramètre et les recettes associées aux tags sélectionnés, afin de ne garder que les recettes qui contiennent tous les tags choisis (affine la recherche au lieu de l'élargir)
 function intersection(first){
 	first = new Set(first);
 	let intersection = [...first]
@@ -216,7 +220,7 @@ function intersection(first){
 
 
 
-//
+// Fonction qui nous permet de récupérer les recettes à afficher en fonction des résultats de la recherche principale et des tags sélectionnés
 function handleFilterRecipes(filters){
 	let filteredRecipes = [...GlobalSearchedRecipes];
 
@@ -254,12 +258,14 @@ function handleFilterRecipes(filters){
 	return intersection(filteredRecipes);
 }
 
+// Fonction qui permet d'afficher une carte de recette
 function createRecipe(recipe){
 	const Template = new RecipeCard(recipe);
 	recipesContainer.appendChild(Template.createRecipeCard(recipe));
 }
 
 // ### PARTIE RECHERCHE DE TAGS ###
+// Même logique que pour la recherche principale, appliquée à chacun des types de tags.
 
 // Appliance
 
@@ -281,7 +287,6 @@ function onApplianceTagSearch(){
 }
 
 // Ustensils
-
 function ustensilTagSearch(query){
 	ustensilsList.innerHTML = ""
 	handleFilterRecipes(currentFilters)
