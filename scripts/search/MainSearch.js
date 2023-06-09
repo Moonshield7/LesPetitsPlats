@@ -4,13 +4,13 @@ class Search {
 	}
 
 	search(query) {
-		return this.filterRecipes(query)
+		return this.filterRecipes(query);
 	}
 }
 
 class RecipeNameSearch extends Search {
 	constructor(Recipes) {
-		super(Recipes)
+		super(Recipes);
 	}
 
 	filterRecipes(query){
@@ -20,26 +20,26 @@ class RecipeNameSearch extends Search {
 
 class IngredientNameSearch extends Search {
 	constructor(Recipes) {
-		super(Recipes)
+		super(Recipes);
 	}
 
 	filterRecipes(query){
-		const filteredByIngredients = []
+		const filteredByIngredients = [];
 		recipes.forEach(recipe => {
 			const recipeIngredients = recipe.ingredients;
 			recipeIngredients.forEach(ing => {
 				if(ing.ingredient.toLowerCase().includes(query.toLowerCase())){
 					filteredByIngredients.push(recipe);
 				}
-			})
-		})
+			});
+		});
 		return filteredByIngredients;
 	}
 }
 
 class ApplianceNameSearch extends Search {
 	constructor(Recipes) {
-		super(Recipes)
+		super(Recipes);
 	}
 
 	filterRecipes(query){
@@ -49,19 +49,19 @@ class ApplianceNameSearch extends Search {
 
 class UstensilNameSearch extends Search {
 	constructor(Recipes) {
-		super(Recipes)
+		super(Recipes);
 	}
 
 	filterRecipes(query){
-		const filteredByUstensils = []
+		const filteredByUstensils = [];
 		recipes.forEach(recipe => {
 			const recipeUstensils = recipe.ustensils;
 			recipeUstensils.forEach(ust => {
 				if(ust.toLowerCase().includes(query.toLowerCase())){
 					filteredByUstensils.push(recipe);
 				}
-			})
-		})
+			});
+		});
 		return filteredByUstensils;
 	}
 }

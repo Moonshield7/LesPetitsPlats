@@ -1,7 +1,7 @@
 class RecipeCard {
 	constructor(recipe) {
 		this._recipe = recipe;
-		this.$article = document.createElement('article');
+		this.$article = document.createElement("article");
 	}
 
 	get recipe() {
@@ -10,33 +10,33 @@ class RecipeCard {
 
 	createRecipeCard() {
 		// Liste des ingrédients
-		const ingredientsList = document.createElement('ul');
+		const ingredientsList = document.createElement("ul");
 		this._recipe.ingredients.forEach(ingredient => {
-			const ingredientsListElement = document.createElement('li');
-			const ingredientQuantity = ingredient.quantity ? `: ${ingredient.quantity}` : '';
+			const ingredientsListElement = document.createElement("li");
+			const ingredientQuantity = ingredient.quantity ? `: ${ingredient.quantity}` : "";
 			ingredientsListElement.innerHTML = `<strong> ${ingredient.ingredient} </strong> ${ingredientQuantity} ${ingredient.unit ? ingredient.unit : ""}`;
 			ingredientsList.appendChild(ingredientsListElement);
 		});
 
 		// Image grisée
-		const imgPlaceholder = document.createElement('div');
+		const imgPlaceholder = document.createElement("div");
 		imgPlaceholder.classList.add("img-placeholder");
-		imgPlaceholder.addEventListener('click', () => console.log(this._recipe))
+		imgPlaceholder.addEventListener("click", () => console.log(this._recipe));
 
 		// Titre et temps de préparation
-		const recipeTilte = document.createElement('div');
+		const recipeTilte = document.createElement("div");
 		recipeTilte.classList.add("recipe-title");
-		const recipeName = document.createElement('h2');
+		const recipeName = document.createElement("h2");
 		recipeName.innerText = `${this._recipe.name}`;
-		const recipeTime = document.createElement('h3');
+		const recipeTime = document.createElement("h3");
 		recipeTime.innerHTML = `<i class="fa-regular fa-clock"></i> ${this._recipe.time} min`;
 
 		// Contenu de la recette
-		const recipeContent = document.createElement('div');
+		const recipeContent = document.createElement("div");
 		recipeContent.classList.add("recipe-content");
-		const recipeIngredients = document.createElement('div');
+		const recipeIngredients = document.createElement("div");
 		recipeIngredients.classList.add("recipe-ingredients");
-		const recipeInstructions = document.createElement('div');
+		const recipeInstructions = document.createElement("div");
 		recipeInstructions.classList.add("recipe-instructions");
 		recipeInstructions.innerText = `${this._recipe.description}`;
 
@@ -50,6 +50,6 @@ class RecipeCard {
 		recipeIngredients.appendChild(ingredientsList);
 		recipeContent.appendChild(recipeInstructions);
 
-		return this.$article
+		return this.$article;
 	}
 }

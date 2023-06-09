@@ -6,9 +6,9 @@ class SearchForm {
 		this.ApplianceNameSearch = new ApplianceNameSearch(Recipes);
 		this.UstensilNameSearch = new UstensilNameSearch(Recipes);
 
-		this.$wrapper = document.createElement('div');
-		this.$recipesWrapper = document.querySelector('.recipes');
-		this.$searchFormWrapper = document.querySelector('.search_recipe');
+		this.$wrapper = document.createElement("div");
+		this.$recipesWrapper = document.querySelector(".recipes");
+		this.$searchFormWrapper = document.querySelector(".search_recipe");
 	}
 
 	search(query) {
@@ -32,7 +32,7 @@ class SearchForm {
 				if(!SearchedRecipes.includes(recipe)){
 					SearchedRecipes.push(recipe);
 				}
-			})
+			});
 		}
 	}
 
@@ -46,13 +46,13 @@ class SearchForm {
 		Recipes.forEach(Recipe => {
 			const Template = new RecipeCard(Recipe);
 			this.$recipesWrapper.appendChild(Template.createRecipeCard());
-		})
+		});
 	}
 
 	onSearch() {
 		this.$searchFormWrapper
-			.querySelector('input')
-			.addEventListener('keyup', e => {
+			.querySelector("input")
+			.addEventListener("keyup", e => {
 				const query = e.target.value;
 
 				if(query.length >= 3){
@@ -68,6 +68,6 @@ class SearchForm {
 					GlobalSearchedRecipes = recipes;
 					this.displayRecipes(GlobalSearchedRecipes);
 				}
-			})
+			});
 	}
 }

@@ -37,7 +37,7 @@ function createIngredientsList(recipesArray){
 			if(!ingredientsData.includes(ing.ingredient.toLowerCase())){
 				ingredientsData.push(ing.ingredient.toLowerCase());
 			}
-		})
+		});
 	});
 	ingredientsData.map((ingredient) => createFilter("ingredients", ingredient, ingredientList));
 }
@@ -64,7 +64,7 @@ function createUstensilsList(recipesArray){
 			if(!ustensilsData.includes(ust.toLowerCase())){
 				ustensilsData.push(ust.toLowerCase());
 			}
-		})
+		});
 	});
 	ustensilsData.map((ustensils) => createFilter("ustensils", ustensils, ustensilsList));
 }
@@ -84,10 +84,10 @@ function createFilter(key, param, container) {
 		filterLi.innerText = param;
 		filterLi.setAttribute("data-state", "inactive");
 		filterLi.addEventListener("click", (e) => {
-		handleLiClick(e, key, param, container)
-	});
+			handleLiClick(e, key, param, container);
+		});
 
-	container.append(filterLi)
+		container.append(filterLi);
 	}
 	
 }
@@ -95,13 +95,13 @@ function createFilter(key, param, container) {
 // Ouverture du dropdown container :
 function openDropdownList(componentName, type){
 	const component = document.getElementById(componentName);
-	const arrow = component.querySelector('i');
-	const input = component.querySelector('input');
-	const dropContainer = component.querySelector('.dropdown_list');
+	const arrow = component.querySelector("i");
+	const input = component.querySelector("input");
+	const dropContainer = component.querySelector(".dropdown_list");
 
 	// On initialise un compteur de clic pour ouvrir et fermer la partie dropdown. Si le compteur est impair : la liste est affichée. S'il est pair : elle est cachée.
-	let countClicks = 0
-	arrow.addEventListener('click', () => {
+	let countClicks = 0;
+	arrow.addEventListener("click", () => {
 		countClicks += 1;
 		if(countClicks%2 !== 0){
 			dropContainer.classList.remove("hidden");
@@ -120,7 +120,7 @@ function openDropdownList(componentName, type){
 			arrow.classList.remove("fa-chevron-up");
 			arrow.classList.add("fa-chevron-down");
 		}
-	})
+	});
 }
 
 // Gestion de ce qu'il se produit quand on clique sur l'un des tags dans la liste. S'il est inactif : il passe actif et est ajouté au tableau des filtres choisis. S'il est déjà actif, il repasse inactif et est retiré du tableau.
@@ -132,34 +132,34 @@ function handleLiClick(e, key, param) {
 		listElement.setAttribute("data-state", "active");
 		currentFilters[key].push(param);
 		handleFilterRecipes(currentFilters);
-		createFilterButton(key, param, listElement)
-		createTagsLists(handleFilterRecipes(currentFilters))
+		createFilterButton(key, param, listElement);
+		createTagsLists(handleFilterRecipes(currentFilters));
 	} 
 }
 
 // Création du bouton pour le filtre sélectionné, sur lequel on peut cliquer ensuite pour le retirer
 function createFilterButton(key, param, listElement){
-	const filterButton = document.createElement('button');
-	filterButton.classList.add('filter_button');
+	const filterButton = document.createElement("button");
+	filterButton.classList.add("filter_button");
 	filterButton.innerHTML = `${param} <i class="far fa-times-circle"></i>`;
 	
-	if(key === 'appliance'){
-		filterButton.classList.add('bg-green')
-	} else if(key === 'ustensils'){
-		filterButton.classList.add('bg-orange')
+	if(key === "appliance"){
+		filterButton.classList.add("bg-green");
+	} else if(key === "ustensils"){
+		filterButton.classList.add("bg-orange");
 	} else {
-		filterButton.classList.add('bg-blue')
+		filterButton.classList.add("bg-blue");
 	}
 
-	filterButton.addEventListener('click', e => {
+	filterButton.addEventListener("click", () => {
 		listElement.classList.remove("is-active");
 		listElement.setAttribute("data-state", "inactive");
 		currentFilters[key] = currentFilters[key].filter((item) => item !== param);
 		filterButton.remove();
 
-		createTagsLists(handleFilterRecipes(currentFilters))
+		createTagsLists(handleFilterRecipes(currentFilters));
 		toggleActiveFiltersContainer();
-	})
+	});
 
 	filtersWrapper.appendChild(filterButton);
 
@@ -168,7 +168,7 @@ function createFilterButton(key, param, listElement){
 
 // Afficher ou (masquer si elle est vide) la div contenant les tags actifs
 function toggleActiveFiltersContainer(){
-	if(filtersWrapper.querySelectorAll('button').length > 0){
+	if(filtersWrapper.querySelectorAll("button").length > 0){
 		filtersWrapper.classList.remove("hidden");
 	} else {
 		filtersWrapper.classList.add("hidden");
@@ -180,13 +180,13 @@ function displayRecipes(recipesArray) {
 	recipesArray.forEach(recipe => {
 		const Template = new RecipeCard(recipe);
 		recipesContainer.appendChild(Template.createRecipeCard(recipe));
-	})
+	});
 }
 
 // Fonction qui permet de faire l'intersection entre le tableau de recettes passé en paramètre et les recettes associées aux tags sélectionnés, afin de ne garder que les recettes qui contiennent tous les tags choisis (affine la recherche au lieu de l'élargir)
 function intersection(first){
 	first = new Set(first);
-	let intersection = [...first]
+	let intersection = [...first];
 
 	if(currentFilters.ingredients.length > 0){
 		for(let i = 0 ; i < currentFilters.ingredients.length ; i++){
@@ -194,11 +194,11 @@ function intersection(first){
 			GlobalSearchedRecipes.forEach(recipe => {
 				recipe.ingredients.forEach(ings => {
 					if(ings.ingredient.toLowerCase().includes(currentFilters.ingredients[i])){
-						second.add(recipe)
+						second.add(recipe);
 					}
-				})
-			})
-			intersection = intersection.filter(item => second.has(item))
+				});
+			});
+			intersection = intersection.filter(item => second.has(item));
 		}
 	}
 	if(currentFilters.ustensils.length > 0) {
@@ -207,15 +207,15 @@ function intersection(first){
 			GlobalSearchedRecipes.forEach(recipe => {
 				recipe.ustensils.forEach(ust => {
 					if(ust.toLowerCase().includes(currentFilters.ustensils[i])){
-						third.add(recipe)
+						third.add(recipe);
 					}
-				})
-			})
-			intersection = intersection.filter(item => third.has(item))
+				});
+			});
+			intersection = intersection.filter(item => third.has(item));
 		}
 		
 	}
-	return intersection
+	return intersection;
 }
 
 
@@ -226,24 +226,24 @@ function handleFilterRecipes(filters){
 
 	// Dans le cas des appareils :
 	if (filters.appliance.length > 0) {
-	    filteredRecipes = filteredRecipes.filter((recipe) => filters.appliance.includes(recipe.appliance.toLowerCase()));
+		filteredRecipes = filteredRecipes.filter((recipe) => filters.appliance.includes(recipe.appliance.toLowerCase()));
 	}
 
 	// Dans le cas des ustensils :
 	if(filters.ustensils.length > 0){
 		filteredRecipes = filteredRecipes.filter(recipe => 
 			recipe.ustensils.some((ustensil) => {
-				return filters.ustensils.includes(ustensil.toLowerCase())
-			}))
+				return filters.ustensils.includes(ustensil.toLowerCase());
+			}));
 	}
 
 	//Dans le cas des ingrédients :
 	if(filters.ingredients.length > 0){
 		filteredRecipes = filteredRecipes.filter(recipe =>
 			recipe.ingredients.some(recipeIngredient => {
-				return filters.ingredients.includes(recipeIngredient.ingredient.toLowerCase())
+				return filters.ingredients.includes(recipeIngredient.ingredient.toLowerCase());
 			})
-		)
+		);
 	}
 
 	if(filteredRecipes.length == 0) {
@@ -274,22 +274,22 @@ function applianceTagSearch(query){
 }
 
 function onApplianceTagSearch(){
-	const applianceInput = document.getElementById('appliance');
-	applianceInput.addEventListener('keyup', e => {
+	const applianceInput = document.getElementById("appliance");
+	applianceInput.addEventListener("keyup", e => {
 		let query = e.target.value;
 
 		if(query.length >= 3){
-			applianceTagSearch(query)
+			applianceTagSearch(query);
 		} else if (query.length === 0) {
 			createApplianceList(handleFilterRecipes(currentFilters));
 		}
-	})
+	});
 }
 
 // Ustensils
 function ustensilTagSearch(query){
-	ustensilsList.innerHTML = ""
-	handleFilterRecipes(currentFilters)
+	ustensilsList.innerHTML = "";
+	handleFilterRecipes(currentFilters);
 	const filteredUstensilsData = ustensilsData.filter(ust => ust.includes(query));
 	filteredUstensilsData.forEach(ustensil => {
 		if(!currentFilters.ustensils.includes(ustensil)){
@@ -298,31 +298,31 @@ function ustensilTagSearch(query){
 			filterLi.innerText = ustensil;
 			filterLi.setAttribute("data-state", "inactive");
 			filterLi.addEventListener("click", (e) => {
-				handleLiClick(e, "ustensils", ustensil, ustensilsList)
+				handleLiClick(e, "ustensils", ustensil, ustensilsList);
 			});
-			ustensilsList.append(filterLi)
+			ustensilsList.append(filterLi);
 		}
 	});
 }
 
 
 function onUstensilsTagSearch(){
-	const input = document.getElementById('ustensils');
-	input.addEventListener('keyup', e => {
+	const input = document.getElementById("ustensils");
+	input.addEventListener("keyup", e => {
 		let query = e.target.value;
 
 		if(query.length >= 3){
-			ustensilTagSearch(query)
+			ustensilTagSearch(query);
 		} else if (query.length === 0) {
 			createUstensilsList(handleFilterRecipes(currentFilters));
 		}
-	})
+	});
 }
 
 // Ingredients
 function ingredientsTagSearch(query){
-	ingredientList.innerHTML = ""
-	handleFilterRecipes(currentFilters)
+	ingredientList.innerHTML = "";
+	handleFilterRecipes(currentFilters);
 	const filteredIngredients = ingredientsData.filter(ing => ing.includes(query));
 	filteredIngredients.forEach(ingredient => {
 		if(!currentFilters.ingredients.includes(ingredient)){
@@ -331,29 +331,29 @@ function ingredientsTagSearch(query){
 			filterLi.innerText = ingredient;
 			filterLi.setAttribute("data-state", "inactive");
 			filterLi.addEventListener("click", (e) => {
-				handleLiClick(e, "ingredients", ingredient, ingredientList)
+				handleLiClick(e, "ingredients", ingredient, ingredientList);
 			});
 	
-			ingredientList.append(filterLi)
+			ingredientList.append(filterLi);
 		}
 	});
 }
 
 function onIngredientsTagSearch(){
-	const input = document.getElementById('ingredients');
-	input.addEventListener('keyup', e => {
+	const input = document.getElementById("ingredients");
+	input.addEventListener("keyup", e => {
 		let query = e.target.value;
 
 		if(query.length >= 3){
-			ingredientsTagSearch(query)
+			ingredientsTagSearch(query);
 		} else if (query.length === 0) {
 			createIngredientsList(handleFilterRecipes(currentFilters));
 		}
-	})
+	});
 }
 
 function onTagSearch(){
 	onIngredientsTagSearch();
 	onApplianceTagSearch();
-	onUstensilsTagSearch()
+	onUstensilsTagSearch();
 }
