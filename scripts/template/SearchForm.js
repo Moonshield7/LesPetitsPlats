@@ -25,15 +25,26 @@ class SearchForm {
 		createArray(SearchByUstensil);
 
 		this.displayRecipes(SearchedRecipes);
-		return SearchedRecipes;
 
 		function createArray(array){
-			array.forEach(recipe => {
-				if(!SearchedRecipes.includes(recipe)){
-					SearchedRecipes.push(recipe);
+			for(let i = 0 ; i < array.length ; i++){
+				if(SearchedRecipes[0] === undefined){
+					SearchedRecipes[SearchedRecipes.length] = array[i];
 				}
-			});
+				else{
+					let count = 0;
+					for(let j = 0 ; j < SearchedRecipes.length ; j++){
+						if(SearchedRecipes[j] === array[i]){
+							count += 1;
+						}
+					}
+					if(count === 0){
+						SearchedRecipes[SearchedRecipes.length] = array[i];
+					}
+				}
+			}
 		}
+		
 	}
 
 	clearRecipesWrapper() {
@@ -43,10 +54,10 @@ class SearchForm {
 	displayRecipes(Recipes) {
 		this.clearRecipesWrapper();
 
-		Recipes.forEach(Recipe => {
-			const Template = new RecipeCard(Recipe);
+		for(let i = 0 ; i < Recipes.length ; i++){
+			const Template = new RecipeCard(Recipes[i]);
 			this.$recipesWrapper.appendChild(Template.createRecipeCard());
-		});
+		}
 	}
 
 	onSearch() {
@@ -56,18 +67,10 @@ class SearchForm {
 				const query = e.target.value;
 
 				if(query.length >= 3){
-					const SearchedRecipes = this.search(query);
-					GlobalSearchedRecipes = SearchedRecipes;
-
-					if(SearchedRecipes.length == 0) {
-						noResults.innerText = " Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-					} else {
-						noResults.innerText = "";
-					}
+					this.search(query);
 				} else if (query.length === 0) {
-					GlobalSearchedRecipes = recipes;
-					this.displayRecipes(GlobalSearchedRecipes);
+					this.displayRecipes(this.Recipes);
 				}
-			});
+			})
 	}
 }
