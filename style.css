@@ -249,13 +249,13 @@ main {
 	margin-top: 25px;
 	margin-bottom: 50px;
 	width: 90%;
-	/* display: grid;
+	display: grid;
 	grid-template-columns: repeat(auto-fill, 380px);
-	grid-gap: 0.1% 6%; */
-	display: flex;
+	grid-gap: 0.1% 6%;
+	/* display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-between; */
 	font-family: var(--font-Lato);
 }
 
@@ -267,8 +267,8 @@ main {
 	background-color: var(--grey-light);
 	border-radius: 5px;
 	overflow: hidden;
-	/* align-self: center;
-	justify-self: center; */
+	align-self: center;
+	justify-self: center;
 }
 
 .img-placeholder {

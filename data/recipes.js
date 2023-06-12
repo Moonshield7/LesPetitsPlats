@@ -1725,4 +1725,4 @@ const recipes = [
     }
 ];
 
-let GlobalSearchedRecipes = recipes;
+let GlobalSearchedRecipes = [...recipes];
