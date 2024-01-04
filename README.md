@@ -1,5 +1,5 @@
 # Projet 7 - Les petits plats
-## Par Fannie PRESMAN 
+## Par Moonshield
 ### Du 2 mai 2023 au 9 juin 2023
 
 **Les branches principales sont :**
